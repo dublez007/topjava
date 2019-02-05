@@ -2,13 +2,11 @@ package ru.javawebinar.topjava.util;
 
 import ru.javawebinar.topjava.model.UserMeal;
 import ru.javawebinar.topjava.model.UserMealWithExceed;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class UserMealsUtil {
     public static void main(String[] args) {
@@ -28,26 +26,23 @@ public class UserMealsUtil {
     }
 
     public static List<UserMealWithExceed>  getFilteredWithExceeded(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
-        Map<LocalDate, Integer> caloriesMap = new TreeMap<>();
-        Iterator<UserMeal> it = mealList.iterator();
-
-        while(it.hasNext()){
-            UserMeal m = it.next();
-            caloriesMap.merge(m.getDateTime().toLocalDate(), m.getCalories(), (a, b) -> a + b);
+        Map<LocalDate, Integer> caloriesPerDayMap = new HashMap<>();
+        for(UserMeal meal : mealList){
+            caloriesPerDayMap.merge(meal.getDateTime().toLocalDate(), meal.getCalories(), Integer::sum);
         }
 
         List<UserMealWithExceed> result = new ArrayList<>();
 
         for(UserMeal meal: mealList) {
-            LocalTime t = meal.getDateTime().toLocalTime();
-            if (t.compareTo(startTime) >= 0 && t.compareTo(endTime) <= 0) {
-                boolean caloriesExceeded = caloriesMap.get(meal.getDateTime().toLocalDate()) > caloriesPerDay;
-                result.add(new UserMealWithExceed(meal.getDateTime(), meal.getDescription(), meal.getCalories(), caloriesExceeded));
+            LocalTime time = meal.getDateTime().toLocalTime();
+            if (TimeUtil.isBetween(time, startTime, endTime)) {
+                boolean isCaloriesExceeded = caloriesPerDayMap.get(meal.getDateTime().toLocalDate()) > caloriesPerDay;
+                result.add(new UserMealWithExceed(meal.getDateTime(), meal.getDescription(), meal.getCalories(), isCaloriesExceeded));
             }
         }
 
-        // TODO return filtered list with correctly exceeded field
         return result;
 
     }
+
 }
