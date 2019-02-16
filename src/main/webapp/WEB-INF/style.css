@@ -1,0 +1,32 @@
+:-moz-placeholder {
+    color: blue;
+}
+::-webkit-input-placeholder {
+    color: blue;
+}
+
+.meal_form ul {
+    width:400px;
+    margin-left:0px;
+    padding:1px;
+}
+
+.meal_form li{
+    padding:8px;
+    position:relative;
+    list-style-type: none;
+    padding:1px;
+}
+
+.meal_form label {
+    width:100px;
+    float:left;
+
+}
+.meal_form  input {
+    height:20px;
+    width:150px;
+    padding:8px;
+    text-align: center;
+}
+
