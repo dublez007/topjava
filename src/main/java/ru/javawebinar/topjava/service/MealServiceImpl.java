@@ -5,12 +5,11 @@ import org.springframework.stereotype.Service;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
+import java.util.function.Predicate;
 
 
+import static ru.javawebinar.topjava.util.ValidationUtil.checkNew;
 import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
@@ -27,6 +26,7 @@ public class MealServiceImpl implements MealService {
 
     @Override
     public Meal create(Meal meal, int userId){
+        checkNew(meal);
         return repository.save(meal, userId);
     }
 
@@ -41,8 +41,10 @@ public class MealServiceImpl implements MealService {
     }
 
     @Override
-    public void update(Meal meal, int userId) throws NotFoundException {
-        checkNotFoundWithId(repository.save(meal, userId), meal.getId());
+    public Meal update(Meal meal, int userId) throws NotFoundException {
+        int mealId = meal.getId();
+        checkNotFoundWithId(repository.get(mealId, userId), mealId);
+        return repository.save(meal, userId);
     }
 
     @Override
@@ -51,8 +53,8 @@ public class MealServiceImpl implements MealService {
     }
 
     @Override
-    public List<Meal> getAllFiltered(int userId, LocalDate startDate, LocalDate endDate,
-                                     LocalTime startTime, LocalTime endTime){
-        return repository.getAllFiltered (userId, startDate, endDate,startTime, endTime);
+    public List<Meal> filter(int userId, Predicate<Meal> filter){
+        return repository.filter(userId, filter);
     }
+
 }

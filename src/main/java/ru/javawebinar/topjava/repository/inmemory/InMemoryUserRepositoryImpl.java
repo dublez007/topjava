@@ -6,13 +6,9 @@ import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Repository
@@ -50,17 +46,23 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
         log.info("getAll");
         return repository.values()
                 .stream()
-                .sorted(Comparator.comparing(User::getName))
+                .sorted(Comparator.comparing(User::getName).thenComparing(User::getId))
                 .collect(Collectors.toList());
     }
 
     @Override
     public User getByEmail(String email) {
         log.info("getByEmail {}", email);
-        return repository.values()
-                .stream()
-                .filter(user -> email.equalsIgnoreCase(user.getEmail()))
-                .findFirst()
-                .get();
+        User result = null;
+        try{
+            result = repository.values()
+                    .stream()
+                    .filter(user -> email.equalsIgnoreCase(user.getEmail()))
+                    .findFirst()
+                    .get();
+        } catch (NoSuchElementException e){
+            log.info("User not found by email", email);
+        }
+        return result;
     }
 }

@@ -20,6 +20,36 @@
 <section>
     <h3><a href="index.html">Home</a></h3>
     <h2>Meals</h2>
+
+    <%--Filter form--%>
+    <form action="meals" method = "get">
+        <table border="1" cellpadding="8" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Date from</th>
+                    <th>Date to</th>
+                    <th>Time from</th>
+                    <th>Time to</th>
+                </tr>
+            </thead>
+            <tr>
+                <td>
+                    <input type="date" name="startDate">
+                </td>
+                <td>
+                    <input type="date" name="endDate">
+                </td>
+                <td>
+                    <input type="time" name="startTime">
+                </td>
+                <td>
+                    <input type="time" name="endTime">
+                </td>
+            </tr>
+        </table>
+        <button type="submit">Apply filter</button>
+        <button type="reset">Clear filter</button>
+    </form>
     <a href="meals?action=create">Add Meal</a>
     <hr/>
     <table border="1" cellpadding="8" cellspacing="0">
