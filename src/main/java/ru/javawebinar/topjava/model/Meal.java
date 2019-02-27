@@ -3,7 +3,6 @@ package ru.javawebinar.topjava.model;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import static ru.javawebinar.topjava.util.MealsUtil.DEFAULT_CALORIES_PER_MEAL;
 
 public class Meal extends AbstractBaseEntity {
     private LocalDateTime dateTime;
@@ -11,7 +10,7 @@ public class Meal extends AbstractBaseEntity {
 
     private String description;
 
-    private int calories = DEFAULT_CALORIES_PER_MEAL;
+    private int calories;
 
 
     public Meal() {

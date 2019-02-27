@@ -50,7 +50,7 @@ public class JdbcMealRepositoryImpl implements MealRepository {
             meal.setId(newKey.intValue());
         } else if (namedParameterJdbcTemplate.update(
                 "UPDATE meals SET user_id=:user_id, datetime=:datetime, description=:description, " +
-                        "calories=:calories WHERE id=:id", map) == 0) {
+                        "calories=:calories WHERE id=:id AND user_id=:user_id", map) == 0) {
             return null;
         }
         return meal;
@@ -58,18 +58,18 @@ public class JdbcMealRepositoryImpl implements MealRepository {
 
     @Override
     public boolean delete(int id, int userId) {
-        return jdbcTemplate.update("DELETE FROM meals WHERE id=?", id) != 0;
+        return jdbcTemplate.update("DELETE FROM meals WHERE id=? AND user_id=?", id, userId) != 0;
     }
 
     @Override
     public Meal get(int id, int userId) {
-        List<Meal> meals = jdbcTemplate.query("SELECT * FROM meals WHERE id=?", ROW_MAPPER, id);
+        List<Meal> meals = jdbcTemplate.query("SELECT * FROM meals WHERE id=? AND user_id =:user_id", ROW_MAPPER, id, userId);
         return DataAccessUtils.singleResult(meals);
     }
 
     @Override
     public List<Meal> getAll(int userId) {
-        return jdbcTemplate.query("SELECT * FROM meals ORDER BY datetime desc, description asc", ROW_MAPPER);
+        return jdbcTemplate.query("SELECT * FROM meals WHERE user_id=? ORDER BY datetime desc", ROW_MAPPER, userId);
     }
 
     @Override
@@ -79,9 +79,9 @@ public class JdbcMealRepositoryImpl implements MealRepository {
                 .addValue("start_date", startDate)
                 .addValue("end_date", endDate);
 
-        return namedParameterJdbcTemplate.query("SELECT * FROM meals " +
-                "WHERE user_id =:user_id " +
-                "AND datetime BETWEEN :start_date and :end_date " +
-                "ORDER BY datetime desc, description asc", map, ROW_MAPPER);
+        return jdbcTemplate.query("SELECT * FROM meals " +
+                "WHERE user_id =? " +
+                "AND datetime BETWEEN ? and ? " +
+                "ORDER BY datetime desc, description asc", ROW_MAPPER, userId, startDate, endDate);
     }
 }
