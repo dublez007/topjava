@@ -3,13 +3,24 @@ package ru.javawebinar.topjava.model;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import static ru.javawebinar.topjava.util.MealsUtil.DEFAULT_CALORIES_PER_MEAL;
 
 public class Meal extends AbstractBaseEntity {
-    private final LocalDateTime dateTime;
+    private LocalDateTime dateTime;
 
-    private final String description;
 
-    private final int calories;
+    private String description;
+
+    private int calories = DEFAULT_CALORIES_PER_MEAL;
+
+
+    public Meal() {
+    }
+
+//TODO for tests
+//    public Meal(Meal m) {
+//        this(m.getId(), m.getDateTime(), m.getDescription(), m.getCalories());
+//    }
 
     public Meal(LocalDateTime dateTime, String description, int calories) {
         this(null, dateTime, description, calories);
@@ -26,12 +37,24 @@ public class Meal extends AbstractBaseEntity {
         return dateTime;
     }
 
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
     public String getDescription() {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public int getCalories() {
         return calories;
+    }
+
+    public void setCalories(int calories) {
+        this.calories = calories;
     }
 
     public LocalDate getDate() {
@@ -41,6 +64,8 @@ public class Meal extends AbstractBaseEntity {
     public LocalTime getTime() {
         return dateTime.toLocalTime();
     }
+
+
 
     @Override
     public String toString() {
