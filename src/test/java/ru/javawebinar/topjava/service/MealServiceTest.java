@@ -20,7 +20,7 @@ public class MealServiceTest {
 
     @BeforeClass
     public static void beforeClass() throws Exception {
-        appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml");
+        appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/spring-db.xml");
         System.out.println("\n" + Arrays.toString(appCtx.getBeanDefinitionNames()) + "\n");
         service = appCtx.getBean(MealServiceImpl.class);
     }
