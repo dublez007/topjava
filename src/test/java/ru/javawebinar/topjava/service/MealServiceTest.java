@@ -1,8 +1,10 @@
 package ru.javawebinar.topjava.service;
 
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.rules.ExpectedException;
+import org.junit.rules.Stopwatch;
+import org.junit.rules.TestWatcher;
+import org.junit.runner.Description;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.bridge.SLF4JBridgeHandler;
@@ -19,6 +21,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static org.slf4j.LoggerFactory.getLogger;
 import static ru.javawebinar.topjava.MealTestData.*;
@@ -33,17 +38,63 @@ import static ru.javawebinar.topjava.UserTestData.USER_ID;
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class MealServiceTest {
     private static final Logger log = getLogger(UserServlet.class);
+    static List<String> info = new ArrayList<>();
+
+    @Autowired
+    private MealService service;
 
     static {
         SLF4JBridgeHandler.install();
     }
 
+    private static void logInfo(Description description, String status, long nanos){
+        String testName = description.getMethodName();
+        log.info(String.format("Test %s %s, in %d microseconds", testName, status, TimeUnit.NANOSECONDS.toMicros(nanos)));
+    }
 
     @Rule
     public final ExpectedException exception = ExpectedException.none();
 
-    @Autowired
-    private MealService service;
+
+
+    @AfterClass
+    public static void close(){
+        info.forEach(System.out::println);
+
+    }
+
+    @Rule
+    public Stopwatch stopwatch = new Stopwatch() {
+        @Override
+        public long runtime(TimeUnit unit) {
+            return super.runtime(unit);
+        }
+
+        @Override
+        protected void succeeded(long nanos, Description description) {
+            logInfo(description, "succeeded", nanos);
+            info.add(description + " succeeded in "+nanos);
+        }
+
+        @Override
+        protected void failed(long nanos, Throwable e, Description description) {
+            logInfo(description, "failed", nanos);
+            info.add(description + " failed in "+nanos);
+        }
+
+        @Override
+        protected void skipped(long nanos, AssumptionViolatedException e, Description description) {
+            logInfo(description, "skipped", nanos);
+            info.add(description + " skipped in "+nanos);
+        }
+
+        @Override
+        protected void finished(long nanos, Description description) {
+            logInfo(description, "finished", nanos);
+            info.add(description + " finished in "+nanos);
+        }
+    };
+
 
     @Test
     public void delete() throws Exception {

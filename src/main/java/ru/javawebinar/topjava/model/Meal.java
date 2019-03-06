@@ -1,23 +1,25 @@
 package ru.javawebinar.topjava.model;
 
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
-import ru.javawebinar.topjava.util.LocalDateTimeConverter;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 
 @NamedQueries({
-        @NamedQuery(
-                name = Meal.UPDATE,
-                query = "UPDATE Meal m SET " +
-                        "m.description=:description, " +
-                        "m.calories=:calories, " +
-                        "m.dateTime=:date_time " +
-                        "WHERE m.id=:id AND m.user.id=:user_id"),
+        //TODO Delete Meal.UPDATE
+//        @NamedQuery(
+//                name = Meal.UPDATE,
+//                query = "UPDATE Meal m SET " +
+//                        "m.description=:description, " +
+//                        "m.calories=:calories, " +
+//                        "m.dateTime=:date_time " +
+//                        "WHERE m.id=:id AND m.user.id=:user_id"),
         @NamedQuery(
                 name = Meal.DELETE,
                 query = "DELETE FROM Meal m WHERE m.id=:id and m.user.id=:user_id"),
@@ -43,27 +45,29 @@ import java.time.LocalTime;
                 name = "meals_unique_user_datetime_idx")})
 public class Meal extends AbstractBaseEntity {
 
-    public static final String UPDATE = "Meal.update";
+    //TODO Delete Meal.UPDATE
+//    public static final String UPDATE = "Meal.update";
     public static final String DELETE = "Meal.delete";
     public static final String ALL_SORTED = "Meal.getAllSorted";
     public static final String GET = "Meal.get";
     public static final String GET_BETWEEN = "Meal.getBetween";
 
 
-    @Column(name = "date_time", nullable = false, columnDefinition = "timestamp default now()")
     @NotNull
-    @Convert(converter = LocalDateTimeConverter.class)
+    @Column(name = "date_time", nullable = false, columnDefinition = "timestamp default now()")
     private LocalDateTime dateTime;
 
-    @Column(name = "description", nullable = false, columnDefinition = "varchar default 'Завтрак'")
+
     @NotNull
+    @Length(min = 2, max = 120)
+    @Column(name = "description")
     private String description;
 
-    @Column(name = "calories", nullable = false, columnDefinition = "int default 100")
-    @NotNull
-    @Range(min = 10, max = 10000)
+    @PositiveOrZero
+    @Column(name = "calories")
     private int calories;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -131,4 +135,5 @@ public class Meal extends AbstractBaseEntity {
                 ", calories=" + calories +
                 '}';
     }
+
 }

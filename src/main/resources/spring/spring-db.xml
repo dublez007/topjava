@@ -41,6 +41,7 @@
                 <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_SQL_COMMENTS}"
                        value="${hibernate.use_sql_comments}"/>
                 <!--<entry key="#{T(org.hibernate.cfg.AvailableSettings).HBM2DDL_AUTO}" value="${hibernate.hbm2ddl.auto}"/>-->
+                <entry key="hibernate.enable_lazy_load_no_trans" value="true"/>
             </map>
         </property>
 
@@ -49,6 +50,7 @@
                   p:showSql="${jpa.showSql}">
             </bean>
         </property>
+
     </bean>
 
     <tx:annotation-driven/>
