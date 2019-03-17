@@ -74,19 +74,11 @@
             </property>
 
             <property name="jpaVendorAdapter">
-                <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
                       p:showSql="${jpa.showSql}">
                 </bean>
             </property>
         </bean>
-
-        <!--<bean name="configurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">-->
-            <!--<property name="locations">-->
-                <!--<bean class="org.springframework.core.io.ClassPathResource">-->
-                    <!--<constructor-arg value="/my.properties"/>-->
-                <!--</bean>-->
-            <!--</property>-->
-        <!--</bean>-->
 
         <!-- Transaction manager for a single JPA EntityManagerFactory (alternative to JTA) -->
         <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"

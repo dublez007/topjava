@@ -1,6 +1,5 @@
 package ru.javawebinar.topjava;
 
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
@@ -15,9 +14,16 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SpringMain {
+    static ClassPathXmlApplicationContext appCtx;
+
     public static void main(String[] args) {
         // java 7 automatic resource management
-        try (ConfigurableApplicationContext appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/spring-db.xml")) {
+        try {
+//            System.setProperty("spring.profiles.active", "postgres, datajpa");
+            appCtx = new ClassPathXmlApplicationContext();
+            appCtx.getEnvironment().setActiveProfiles("postgres", "datajpa");
+            appCtx.setConfigLocations("spring/spring-app.xml", "spring/spring-db.xml", "spring/spring-tools.xml");
+            appCtx.refresh();
             System.out.println("Bean definition names: " + Arrays.toString(appCtx.getBeanDefinitionNames()));
             AdminRestController adminUserController = appCtx.getBean(AdminRestController.class);
             adminUserController.create(new User(null, "userName", "email@mail.ru", "password", Role.ROLE_ADMIN));
@@ -29,6 +35,9 @@ public class SpringMain {
                             LocalDate.of(2015, Month.MAY, 30), LocalTime.of(7, 0),
                             LocalDate.of(2015, Month.MAY, 31), LocalTime.of(11, 0));
             filteredMealsWithExcess.forEach(System.out::println);
+        }
+        catch (Exception e){
+            e.printStackTrace();
         }
     }
 }
