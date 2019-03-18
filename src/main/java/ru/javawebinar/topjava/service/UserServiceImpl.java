@@ -15,6 +15,7 @@ import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFound;
 import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
+//@Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
@@ -52,6 +53,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAll() {
         return repository.getAll();
+    }
+
+
+    @Override
+    public User getWithMeals(int id){
+        return checkNotFoundWithId(repository.getWithMeals(id), id);
     }
 
     @CacheEvict(value = "users", allEntries = true)

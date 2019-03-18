@@ -22,6 +22,11 @@ public class MealTestData {
     public static final Meal ADMIN_MEAL1 = new Meal(ADMIN_MEAL_ID, of(2015, Month.JUNE, 1, 14, 0), "Админ ланч", 510);
     public static final Meal ADMIN_MEAL2 = new Meal(ADMIN_MEAL_ID + 1, of(2015, Month.JUNE, 1, 21, 0), "Админ ужин", 1500);
 
+    static {
+        ADMIN_MEAL1.setUser(UserTestData.ADMIN);
+    }
+
+
     public static final List<Meal> MEALS = List.of(MEAL6, MEAL5, MEAL4, MEAL3, MEAL2, MEAL1);
 
     public static Meal getCreated() {
@@ -42,5 +47,10 @@ public class MealTestData {
 
     public static void assertMatch(Iterable<Meal> actual, Iterable<Meal> expected) {
         assertThat(actual).usingElementComparatorIgnoringFields("user").isEqualTo(expected);
+    }
+
+    public static void assertMatchWithUser(Meal actual, Meal expected) {
+        assertThat(actual).isEqualTo(expected);
+//        UserTestData.assertMatch(actual.getUser(), expected.getUser());
     }
 }

@@ -11,7 +11,7 @@ import ru.javawebinar.topjava.model.User;
 import java.util.List;
 import java.util.Optional;
 
-@Transactional(readOnly = true)
+//@Transactional(readOnly = true)
 public interface CrudUserRepository extends JpaRepository<User, Integer> {
     @Transactional
     @Modifying
@@ -30,4 +30,7 @@ public interface CrudUserRepository extends JpaRepository<User, Integer> {
     List<User> findAll(Sort sort);
 
     User getByEmail(String email);
+
+    @Query("SELECT u FROM User u LEFT JOIN FETCH u.meals JOIN Meal m on u.id = m.user.id WHERE u.id=:id")
+    User findWithMeals(@Param("id") int id);
 }
