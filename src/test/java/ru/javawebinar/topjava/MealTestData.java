@@ -24,6 +24,7 @@ public class MealTestData {
 
     static {
         ADMIN_MEAL1.setUser(UserTestData.ADMIN);
+        ADMIN_MEAL2.setUser(UserTestData.ADMIN);
     }
 
 

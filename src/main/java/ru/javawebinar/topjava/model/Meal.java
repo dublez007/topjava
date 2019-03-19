@@ -96,6 +96,7 @@ public class Meal extends AbstractBaseEntity {
 
     public void setUser(User user) {
         this.user = user;
+        this.user.addMeal(this);
     }
 
     @Override
