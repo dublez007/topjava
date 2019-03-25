@@ -1,13 +1,16 @@
 package ru.javawebinar.topjava.service;
 
+import org.junit.Assume;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import ru.javawebinar.topjava.Profiles;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import javax.validation.ConstraintViolationException;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.List;
 
 import static java.time.LocalDateTime.of;
 import static ru.javawebinar.topjava.MealTestData.*;
@@ -18,6 +21,9 @@ public abstract class AbstractMealServiceTest extends AbstractServiceTest {
 
     @Autowired
     protected MealService service;
+
+    @Autowired
+    private org.springframework.core.env.Environment environment;
 
     @Test
     public void delete() throws Exception {
@@ -80,6 +86,7 @@ public abstract class AbstractMealServiceTest extends AbstractServiceTest {
 
     @Test
     public void testValidation() throws Exception {
+        Assume.assumeFalse(List.of(environment.getActiveProfiles()).contains(Profiles.JDBC));
         validateRootCause(() -> service.create(new Meal(null, of(2015, Month.JUNE, 1, 18, 0), "  ", 300), USER_ID), ConstraintViolationException.class);
         validateRootCause(() -> service.create(new Meal(null, null, "Description", 300), USER_ID), ConstraintViolationException.class);
         validateRootCause(() -> service.create(new Meal(null, of(2015, Month.JUNE, 1, 18, 0), "Description", 9), USER_ID), ConstraintViolationException.class);
