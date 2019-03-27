@@ -34,7 +34,7 @@ public class JspMealController {
         return "meals";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}")
     public String get(@PathVariable("id") int id, Model model) {
         int userId = SecurityUtil.authUserId();
         Meal meal = mealService.get(id, userId);
@@ -54,7 +54,6 @@ public class JspMealController {
     public String create(Model model) {
             Meal meal = new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000);
             model.addAttribute(meal);
-
             return "mealForm";
     }
 
