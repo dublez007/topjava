@@ -14,11 +14,11 @@
 <jsp:include page="fragments/bodyHeader.jsp"/>
 <section>
     <%--TODO--%>
-    <h2>${param.action} == 'create' ? <spring:message code="meal.create"/> : <spring:message code="meal.edit"/>}</h2>
+    <h2>${param.action} == 'create' ? <spring:message code="meal.create"/> : <spring:message code="meal.edit"/></h2>
     <hr>
     <jsp:useBean id="meal" type="ru.javawebinar.topjava.model.Meal" scope="request"/>
     <sf:form method="post" action="save" modelAttribute="meal">
-        <input type="hidden" name="id" value="${meal.id}">
+        <input type="hidden" name="id" value="${meal.id}" required>
         <dl>
             <dt><spring:message code="meal.dateTime"/></dt>
             <dd><input type="datetime-local" value="${meal.dateTime}" name="dateTime" required></dd>

@@ -7,4 +7,5 @@
        http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan base-package="ru.javawebinar.topjava.**.repository.inmemory"/>
+    <context:component-scan base-package="ru.javawebinar.topjava.**.web"/>
 </beans>

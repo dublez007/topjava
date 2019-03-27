@@ -14,7 +14,7 @@
 <jsp:include page="fragments/bodyHeader.jsp"/>
 <section>
     <h3><spring:message code="meal.title"/></h3>
-    <form method="post" action="meals/filter">
+    <form method="post" action="${pageContext.request.contextPath}/meals">
         <dl>
             <dt><spring:message code="meals.filter.startDate"/></dt>
             <dd><input type="date" name="startDate" value="${param.startDate}"></dd>
@@ -32,6 +32,7 @@
             <dd><input type="time" name="endTime" value="${param.endTime}"></dd>
         </dl>
         <button type="submit"><spring:message code="meals.submit"/></button>
+        <button type="reset" onClick="javascript:location.href='${pageContext.request.contextPath}/meals'"><spring:message code="meals.resetFilter"/></button>
     </form>
     <hr/>
     <a href="meals/create"><spring:message code="meals.addMeal"/></a>
