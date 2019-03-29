@@ -2,11 +2,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://topjava.javawebinar.ru/functions" %>
+<%@ taglib prefix="fn2" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
+<%--<c:set var="req" value="${pageContext.request}" />--%>
+<%--<c:set var="uri" value="${req.requestURI}" />--%>
+<%--<c:set var="url" value="${req.requestURL}" />--%>
+<%--<c:set var="path" value="${req.contextPath}" />--%>
+
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
 <head>
+    <%--<base href="${fn2:substring(url, 0, fn2:length(url) - fn2:length(uri))}${path}/" />--%>
     <title><spring:message code="meals.title"/></title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
 </head>
