@@ -4,6 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.javawebinar.topjava.model.Meal;
@@ -21,7 +22,7 @@ public class MealRestController extends AbstractMealController {
     public static final String REST_URL = "/rest/meals";
 
     @Override
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}")
     public Meal get(@PathVariable int id) {
         return super.get(id);
     }
@@ -58,16 +59,16 @@ public class MealRestController extends AbstractMealController {
 
     @GetMapping (value = "/search")
     public List<MealTo> getBetween(
-            @RequestParam
+            @RequestParam @Nullable
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
                     LocalDate startDate,
-            @RequestParam
+            @RequestParam @Nullable
             @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
                     LocalTime startTime,
-            @RequestParam
+            @RequestParam @Nullable
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
                     LocalDate endDate,
-            @RequestParam
+            @RequestParam @Nullable
             @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
                     LocalTime endTime) {
         return super.getBetween(startDate,startTime, endDate,endTime);
