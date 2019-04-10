@@ -38,7 +38,7 @@ function updateTable() {
     });
 }
 
-function save() {
+function save(id) {
     $.ajax({
         type: "POST",
         url: context.ajaxUrl,

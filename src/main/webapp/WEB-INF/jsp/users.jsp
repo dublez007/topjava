@@ -20,6 +20,7 @@
         <table class="table table-striped" id="datatable">
             <thead>
             <tr>
+                <th><spring:message code="user.id"/></th>
                 <th><spring:message code="user.name"/></th>
                 <th><spring:message code="user.email"/></th>
                 <th><spring:message code="user.roles"/></th>
@@ -32,6 +33,7 @@
             <c:forEach items="${users}" var="user">
                 <jsp:useBean id="user" type="ru.javawebinar.topjava.model.User"/>
                 <tr>
+                    <td><c:out value="${user.id}"/></td>
                     <td><c:out value="${user.name}"/></td>
                     <td><a href="mailto:${user.email}">${user.email}</a></td>
                     <td>${user.roles}</td>
@@ -81,7 +83,7 @@
                     <span class="fa fa-close"></span>
                     <spring:message code="common.cancel"/>
                 </button>
-                <button type="button" class="btn btn-primary" onclick="save()">
+                <button type="button" class="btn btn-primary" onclick="save(${user.id})">
                     <span class="fa fa-check"></span>
                     <spring:message code="common.save"/>
                 </button>
