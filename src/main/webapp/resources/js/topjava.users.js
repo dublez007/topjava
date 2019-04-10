@@ -35,7 +35,7 @@ $(function () {
                 ],
                 "order": [
                     [
-                        0,
+                        5,
                         "asc"
                     ]
                 ]

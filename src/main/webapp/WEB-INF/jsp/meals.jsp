@@ -9,52 +9,6 @@
 <script type="text/javascript" src="resources/js/topjava.common.js" defer></script>
 <script type="text/javascript" src="resources/js/topjava.meals.js" defer></script>
 <jsp:include page="fragments/bodyHeader.jsp"/>
-<%--<div class="jumbotron pt-4">--%>
-    <%--<div class="container">--%>
-        <%--<h3 class="text-center"><spring:message code="meal.title"/></h3>--%>
-
-        <%--<form method="post">--%>
-            <%--<input type="hidden" id=${meal.id} name="id">--%>
-            <%--<div class="col-md-3">--%>
-                <%--<div class="form-group">--%>
-                    <%--<label for="startDate"><spring:message code="meal.startDate"/>:</label>--%>
-                    <%--<input type="date" class="form-control" id="startDate" name="startDate">--%>
-                    <%--<span class="input-group-addon">--%>
-                        <%--<span class="glyphicon glyphicon-calendar"></span>--%>
-                    <%--</span>--%>
-                <%--</div>--%>
-            <%--&lt;%&ndash;</div>&ndash;%&gt;--%>
-            <%--&lt;%&ndash;<div class="col-md-3">&ndash;%&gt;--%>
-                <%--<div class="form-group">--%>
-                    <%--<label for="endDate"><spring:message code="meal.endDate"/>:</label>--%>
-                    <%--<input type="date" class="form-control" id="endDate" name="endDate">--%>
-                    <%--<span class="input-group-addon">--%>
-                        <%--<span class="glyphicon glyphicon-calendar"></span>--%>
-                    <%--</span>--%>
-                <%--</div>--%>
-            <%--&lt;%&ndash;<div class="col-md-3">&ndash;%&gt;--%>
-                <%--<div class="form-group">--%>
-                    <%--<label for="startTime"><spring:message code="meal.startTime"/>:</label>--%>
-                    <%--<input type="time" class="form-control" id="startTime" name="startTime">--%>
-                    <%--<span class="input-group-addon">--%>
-                        <%--<span class="glyphicon glyphicon-calendar"></span>--%>
-                    <%--</span>--%>
-                <%--</div>--%>
-            <%--&lt;%&ndash;<div class="col-md-3">&ndash;%&gt;--%>
-                <%--<div class="form-group">--%>
-                    <%--<label for="endTime"><spring:message code="meal.endTime"/>:</label>--%>
-                    <%--<input type="time" class="form-control" id="endTime" name="endTime">--%>
-                    <%--<span class="input-group-addon">--%>
-                        <%--<span class="glyphicon glyphicon-calendar"></span>--%>
-                    <%--</span>--%>
-                <%--</div>--%>
-            <%--</div>--%>
-            <%--<button type="submit" class="btn btn-primary"><spring:message code="meal.filter"/></button>--%>
-        <%--</form>--%>
-    <%--</div>--%>
-        <%--<br/>--%>
-        <%--<hr>--%>
-<%--</div>--%>
 <div class="jumbotron pt-4">
     <div class="container">
         <button class="btn btn-primary" onclick="add()">
@@ -74,14 +28,14 @@
             </thead>
             <c:forEach items="${meals}" var="meal">
             <jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.to.MealTo"/>
-            <tr data-mealExcess="${meal.excess}">
+            <tr data-mealExcess="${meal.excess}" id="${meal.id}">
                 <td>
                     ${fn:formatDateTime(meal.dateTime)}
                 </td>
                 <td>${meal.description}</td>
                 <td>${meal.calories}</td>
                 <td><a><span class="fa fa-pencil"></span></a></td>
-                <td><a class="delete" id="${meal.id}"><span class="fa fa-remove"></span></a></td>
+                <td><a class="delete"><span class="fa fa-remove"></span></a></td>
             </tr>
             </c:forEach>
         </table>

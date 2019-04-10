@@ -26,7 +26,7 @@ $(function () {
                 ],
                 "order": [
                     [
-                        1,
+                        0,
                         "asc"
                     ]
                 ]
