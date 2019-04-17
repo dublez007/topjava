@@ -280,6 +280,13 @@
             <artifactId>noty</artifactId>
             <version>${webjars-noty.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.webjars/momentjs -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>momentjs</artifactId>
+            <version>2.22.2</version>
+        </dependency>
+
 
         <!--JSON-->
         <dependency>
