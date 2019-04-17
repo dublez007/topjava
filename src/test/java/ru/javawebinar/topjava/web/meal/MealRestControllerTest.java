@@ -19,8 +19,8 @@ import static ru.javawebinar.topjava.TestUtil.readFromJson;
 import static ru.javawebinar.topjava.TestUtil.readFromJsonMvcResult;
 import static ru.javawebinar.topjava.UserTestData.USER;
 import static ru.javawebinar.topjava.model.AbstractBaseEntity.START_SEQ;
-import static ru.javawebinar.topjava.util.MealsUtil.createWithExcess;
-import static ru.javawebinar.topjava.util.MealsUtil.getWithExcess;
+import static ru.javawebinar.topjava.util.MealsUtil.asTo;
+import static ru.javawebinar.topjava.util.MealsUtil.getTo;
 
 class MealRestControllerTest extends AbstractControllerTest {
 
@@ -76,7 +76,7 @@ class MealRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJson(getWithExcess(MEALS, USER.getCaloriesPerDay())));
+                .andExpect(contentJson(getTo(MEALS, USER.getCaloriesPerDay())));
     }
 
     @Test
@@ -86,13 +86,13 @@ class MealRestControllerTest extends AbstractControllerTest {
                 .param("endDate", "2015-05-31").param("endTime", "11:00"))
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andExpect(contentJson(createWithExcess(MEAL4, true), createWithExcess(MEAL1, false)));
+                .andExpect(contentJson(asTo(MEAL4, true), asTo(MEAL1, false)));
     }
 
     @Test
     void testFilterAll() throws Exception {
         mockMvc.perform(get(REST_URL + "filter?startDate=&endTime="))
                 .andExpect(status().isOk())
-                .andExpect(contentJson(getWithExcess(MEALS, USER.getCaloriesPerDay())));
+                .andExpect(contentJson(getTo(MEALS, USER.getCaloriesPerDay())));
     }
 }
